@@ -1,63 +1,20 @@
-name: Build & Pack Capacitor Plugin
+release:
+  name: Upload to GitHub Releases
+  needs: build
+  runs-on: ubuntu-latest
+  if: github.event_name == 'release'
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch: # Allows manual execution
-  release:
-    types: [created] # Runs when a new GitHub Release is created
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4  # ✅ Required to download artifacts
 
-jobs:
-  build:
-    name: Build and Pack Plugin
-    runs-on: ubuntu-latest
+    - name: Download Built Package
+      uses: actions/download-artifact@v4
+      with:
+        name: capacitor6-nodejs
+        path: .
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Plugin
-        run: npm run build
-
-      - name: Pack NPM Package
-        run: npm run pack
-
-      - name: Upload Package Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: capacitor-nodejs-package
-          path: "./capacitor-nodejs-*.tgz"  # ✅ Ensure correct package file
-
-  release:
-    name: Upload to GitHub Releases
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4  # ✅ Required to download artifacts
-
-      - name: Download Built Package
-        uses: actions/download-artifact@v4
-        with:
-          name: capacitor-nodejs-package
-          path: .
-
-      - name: Upload Package to GitHub Releases
-        uses: softprops/action-gh-release@v2
-        with:
-          files: "./capacitor-nodejs-*.tgz"  # ✅ Ensure correct file is uploaded
+    - name: Upload Package to GitHub Releases
+      uses: softprops/action-gh-release@v2
+      with:
+        files: "./capacitor6-nodejs-*.tgz"  # ✅ Correct file to be uploaded to release
