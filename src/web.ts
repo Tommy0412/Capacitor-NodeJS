@@ -1,5 +1,6 @@
 import { WebPlugin } from '@capacitor/core';
 import type { CapacitorException, PluginListenerHandle } from '@capacitor/core';
+
 import type { CapacitorNodeJSPlugin } from './implementation';
 
 export class CapacitorNodeJSWeb extends WebPlugin implements CapacitorNodeJSPlugin {
