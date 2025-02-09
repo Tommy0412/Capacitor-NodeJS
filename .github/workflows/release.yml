@@ -6,15 +6,15 @@ release:
 
   steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4  # ✅ Required to download artifacts
+      uses: actions/checkout@v4  
 
     - name: Download Built Package
       uses: actions/download-artifact@v4
       with:
-        name: capacitor6-nodejs
+        name: capacitor-nodejs
         path: .
 
     - name: Upload Package to GitHub Releases
       uses: softprops/action-gh-release@v2
       with:
-        files: "./capacitor6-nodejs-*.tgz"  # ✅ Correct file to be uploaded to release
+        files: "./capacitor-nodejs-*.tgz"  
