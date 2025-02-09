@@ -18,7 +18,7 @@ export class CapacitorNodeJSWeb extends WebPlugin implements CapacitorNodeJSPlug
   whenReady(): Promise<void> {
     throw this.unavailableNodeJS();
   }
-
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   override addListener(eventName: string, _listenerFunc: (data: any) => void): Promise<PluginListenerHandle> & PluginListenerHandle {
     const handle: PluginListenerHandle = {
       remove: async () => {
